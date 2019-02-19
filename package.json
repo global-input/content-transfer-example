@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bit/globalinput.web.clipboard-copy-button": "0.0.1",
+    "@bit/globalinput.web.global-input-connect": "0.0.7",
     "react": "^16.8.2",
     "react-dom": "^16.8.2"
   },
