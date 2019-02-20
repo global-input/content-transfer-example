@@ -15,7 +15,7 @@ npm i @bit/globalinput.web.clipboard-copy-button
 Finally, the generated ```App.js``` is modified to implement the logic of a text editor and the mobile logic for transfer content between the Global Input App and the application. The [src/App.js](https://github.com/global-input/content-transfer-example/blob/master/src/App.js) contains all the logic.
 
 
-Lastly run the app in the development mode using 'npm run' or 'yarn' command:<br>
+You can run the application using ```npm run start``` or ```yarn start``` command:<br>
 ```
 npm run start
 ```
