@@ -14,7 +14,7 @@ class App extends Component {
       super(props);
       this.state={content:"", connected:false, notificationMessage:null};
       this.messageTimeoutHandler=null;
-      this.initMobileData(props);
+      this.mobile.init(props);
   }
   componentWillUnmount(){
     if(this.messageTimeoutHandler){
@@ -24,7 +24,6 @@ class App extends Component {
   }
   setContent(content){
       this.setState(Object.assign({},{content}));
-      this.mobile.setContent(content);
   }
   setNotificationMessage(notificationMessage){
     this.setState(Object.assign({},this.state,{notificationMessage}),()=>{
@@ -36,49 +35,6 @@ class App extends Component {
   onSenderConnected(){
       this.setState(Object.assign({},{connected:true}));
   }
-  initMobileData(props){
-            this.mobile={
-                  globalInputConnect:null,
-                  sendMessage:(message, fieldid)=>{
-                        if(this.mobile.globalInputConnect){
-
-                              this.mobile.globalInputConnect.sendInputMessage(message,null,fieldid);
-                        }
-                        else{
-
-                        }
-                  },
-                  config:{
-                                url:props.url,
-                                apikey:props.apikey,
-                                securityGroup:props.securityGroup,
-                                initData:{
-                                    action:"input",
-                                    dataType:"control",
-                                    form:{
-                                      title:"Content Transfer",
-                                      fields:[]
-                                    }
-                                },
-                                onSenderConnected:()=>this.onSenderConnected.bind(this)
-                  },
-                  addField: field=>this.mobile.config.initData.form.fields.push(field)
-            };
-            const contentField={
-                    label:"Content",
-                    id:"content",
-                    value:"",
-                    nLines:10,
-                    operations:{
-                        onInput:value=>this.setContent(value)
-                    }
-            };
-            this.mobile.addField(contentField);
-            this.mobile.setContent=content=>{
-              this.mobile.sendMessage(content,contentField.id);
-            }
-  }
-
 
   renderCopyButton(){
     if(this.state.notificationMessage){
@@ -103,6 +59,7 @@ class App extends Component {
           <textarea  id="contentField" style={styles.textArea.get()}
             onChange={(evt) => {
                 this.setContent(evt.target.value);
+                this.mobile.setContent(evt.target.value);
 
           }} value={this.state.content}/>
           <div style={styles.globalConnect}>
@@ -122,6 +79,53 @@ class App extends Component {
     );
 
   }
+
+  mobile={
+    globalInputConnect:null,
+        config:null,
+        disconnect:()=>{
+            if(this.mobile.globalInputConnect){
+                this.mobile.globalInputConnect.disconnectGlobaInputApp();
+            }
+        },
+        init:(props)=>{
+                  this.mobile.config={
+                        url:props.url,
+                        apikey:props.apikey,
+                        securityGroup:props.securityGroup,
+                        initData:{
+                            action:"input",
+                            dataType:"control",
+                            form:{
+                              title:"Content Transfer",
+                              fields:[{
+                                label:"Content",
+                                id:"content",
+                                value:"",
+                                nLines:10,
+                                operations:{
+                                    onInput:value=>this.setContent(value)
+                                }
+                              }]
+                            }
+                        },
+                        onSenderConnected:()=>{
+                                this.setState(Object.assign({},this.state,{connected:true}));
+                        },
+                        onSenderDisconnected:()=>{
+                            this.setState(Object.assign({}, this.state,{connected:false}));
+                        }
+                   };
+        },
+        setContent:content=>{
+          if(this.mobile.globalInputConnect){
+                this.mobile.globalInputConnect.sendInputMessage(content,0);
+          }
+        }
+
+
+  }
+
 
 
 
