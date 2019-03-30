@@ -1,135 +1,91 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-import ClipboardCopyButton from '@bit/globalinput.web.clipboard-copy-button';
-import GlobalInputConnect from '@bit/globalinput.web.global-input-connect';
+import ClipboardCopyButton from './components/clipboard-copy-button';
+import {GlobalInputConnect} from 'global-input-react';
 import {styles} from "./styles";
 
-const textContent={
-    title:"Content Transfer Example",
-    githuburl:"https://github.com/global-input/content-transfer-example"
-}
-
-class App extends Component {
-  constructor(props){
-      super(props);
-      this.state={content:"", connected:false, notificationMessage:null};
-      this.messageTimeoutHandler=null;
-      this.mobile.init(props);
-  }
-  componentWillUnmount(){
-    if(this.messageTimeoutHandler){
-      clearTimeout(this.messageTimeoutHandler);
-      this.messageTimeoutHandler=null;
-    }
-  }
-  setContent(content){
-      this.setState(Object.assign({},{content}));
-  }
-  setNotificationMessage(notificationMessage){
-    this.setState(Object.assign({},this.state,{notificationMessage}),()=>{
-      this.clipboardTimerHandler=setTimeout(()=>{
-            this.setState(Object.assign({},this.state,{notificationMessage:null}));
-      },2000);
-    });
-  }
-  onSenderConnected(){
-      this.setState(Object.assign({},{connected:true}));
-  }
-
-  renderCopyButton(){
-    if(this.state.notificationMessage){
-
-    }
-  }
-  render(){
-    return(
-      <div style={styles.container}>
-
-        <div style={styles.title}>
-            {textContent.title}
-        </div>
-        <div style={styles.topControl}>
-              <span style={styles.githuburl}>
-                  <a href={textContent.githuburl} target="_blank">{textContent.githuburl}</a>
-              </span>
-              <ClipboardCopyButton copyFieldId="contentField"/>
-
-        </div>
-        <div style={styles.areaContainer}>
-          <textarea  id="contentField" style={styles.textArea.get()}
-            onChange={(evt) => {
-                this.setContent(evt.target.value);
-                this.mobile.setContent(evt.target.value);
-
-          }} value={this.state.content}/>
-          <div style={styles.globalConnect}>
-                <GlobalInputConnect mobileConfig={this.mobile.config}
-                  ref={globalInputConnect =>this.mobile.globalInputConnect=globalInputConnect}
-                  connectingMessage="Connecting...."
-                  connectedMessage="Scan with Global Input App">
-
-                  </GlobalInputConnect>
-          </div>
-
-        </div>
-
-
-
-      </div>
-    );
-
-  }
-
-  mobile={
-    globalInputConnect:null,
-        config:null,
-        disconnect:()=>{
-            if(this.mobile.globalInputConnect){
-                this.mobile.globalInputConnect.disconnectGlobaInputApp();
+/**********************Mobile Integration Logic****************/
+  let mobile={
+        globalInputConnect:null, //this is used when application needs to send message to the mobile app
+        _config:null,            //configuration for specifying the mobile user interface etc.
+        _setContent:null,        //The function can set the content of the text field displayed on the computer screen.
+        _setConnected:null,      //This function will be called with true/fase when a mobile is connected/disconnected
+        buildConfig:function(props, setContent, setConnected){ //build configuration for mobile user interface etc
+            this._setContent=setContent;                       //this function will be called when user input content on mobileConfig
+            this._setConnected=setConnected;                   //this function will be called when a mobile is connected/disconnected
+            if(this.config){                                   //build config only once.
+              return this.config;
             }
+            this._config={
+                          url:props.url,                      //optional websocket server url is different from the default
+                          apikey:props.apikey,                //optional  the websocket server apikey is different from the default
+                          securityGroup:props.securityGroup,  //optional if the application want restrict GLobal Input App users to those who have prepared with the application
+                          initData:{
+                              action:"input",                 //for action transfering data.
+                              dataType:"form",                //the data type is form data
+                              form:{
+                                title:"Content Transfer",     // the tile of the form displayed on the mobile
+                                fields:[{
+                                  label:"Content",            //The label of the field displayed on the mobile
+                                  value:"",                   //initial value of the  field
+                                  nLines:10,                  //text field if nLines === 1; textarea if nLines>1
+                                  operations:{
+                                      onInput:value=>this._setContent(value)    //will be called when user input text on mobile
+                                  }
+                                }]
+                              }
+                          },
+                          onSenderConnected:()=>{
+                            this._setConnected(true);   //will be called when a mobile is connected.
+                          },
+                          onSenderDisconnected:()=>{
+                            this._setConnected(false);  //will be disconnected when a mobile is disconnected
+                          }
+             };
+             return this._config;
         },
-        init:(props)=>{
-                  this.mobile.config={
-                        url:props.url,
-                        apikey:props.apikey,
-                        securityGroup:props.securityGroup,
-                        initData:{
-                            action:"input",
-                            dataType:"control",
-                            form:{
-                              title:"Content Transfer",
-                              fields:[{
-                                label:"Content",
-                                id:"content",
-                                value:"",
-                                nLines:10,
-                                operations:{
-                                    onInput:value=>this.setContent(value)
-                                }
-                              }]
-                            }
-                        },
-                        onSenderConnected:()=>{
-                                this.setState(Object.assign({},this.state,{connected:true}));
-                        },
-                        onSenderDisconnected:()=>{
-                            this.setState(Object.assign({}, this.state,{connected:false}));
-                        }
-                   };
-        },
-        setContent:content=>{
-          if(this.mobile.globalInputConnect){
-                this.mobile.globalInputConnect.sendInputMessage(content,0);
+        setContent:function(content){  //set the content on the mobile
+          if(this.globalInputConnect){
+                this.globalInputConnect.sendInputMessage(content,0);    //this will set the content of the first field on the form on the mobile
           }
         }
+  };
 
+export default props=>{
+          const [content, setContent]=useState("");
+          const [connsected, setConnected]=useState(false);
+          let mobileConfig=mobile.buildConfig(props,setContent,setConnected);
+          return(
+            <div style={styles.container}>
 
-  }
+              <div style={styles.title}>
+                  Content Transfer Example
+              </div>
+              <div style={styles.topControl}>
+                    <span style={styles.githuburl}>
+                        <a href="https://github.com/global-input/content-transfer-example" target="_blank">
+                            https://github.com/global-input/content-transfer-example
+                        </a>
+                    </span>
+                    <ClipboardCopyButton copyFieldId="contentField"/>
 
+              </div>
+              <div style={styles.areaContainer}>
+                <textarea  id="contentField" style={styles.textArea}
+                  onChange={(evt) => {
+                      setContent(evt.target.value);
+                     mobile.setContent(evt.target.value);  //this will send the content to the mobile
 
-
-
+                }} value={content}/>
+                <div style={styles.globalConnect}>
+                      <GlobalInputConnect mobileConfig={mobileConfig}
+                        ref={globalInputConnect =>mobile.globalInputConnect=globalInputConnect}
+                        connectingMessage="Connecting...."
+                        connectedMessage="Scan with Global Input App">
+                        </GlobalInputConnect>
+                </div>
+              </div>
+            </div>
+          );
 
 }
-
-export default App;
