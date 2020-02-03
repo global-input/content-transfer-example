@@ -6,6 +6,7 @@ export const styles={
         alignItems:"center",
         windows:"100%",
         minHeight:window.innerHeight*2/3
+
     },
 
     title:{
@@ -31,13 +32,16 @@ export const styles={
       width:"100%",
     },
     textArea:{
+        get:()=>{
+
+          return{
             width:"80%",
             height:window.innerHeight*2/3
+          }
+        }
+
     },
-    copyButton:{
-      color:"#5291CD",
-      borderRadius:8,
-    },
+    
     topControl:{
       display:"flex",
       flexDirection:"row",
@@ -50,6 +54,7 @@ export const styles={
     globalConnect:{
         marginTop:20,
         position:"absolute"
-    }
+    },
+
 
 };
