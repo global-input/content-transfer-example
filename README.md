@@ -1,5 +1,5 @@
 ## Mobile Content Transfer
-This example application demonstrates how you can use the [Global Input App library](https://github.com/global-input/global-input-react) to implement [Content transfer](https://globalinput.co.uk/global-input-app/mobile-content-transfer) on a device application so users can transfer content from their mobile devices to the device that is running your application. The communication between the mobile and your application is secured with end-to-end encryption. 
+This is the source code of [a demo application](https://globalinput.co.uk/global-input-app/content-transfer), demonstrating how you can use the [Global Input App library](https://github.com/global-input/global-input-react) to achieve [Mobile Content Transfer](https://globalinput.co.uk/global-input-app/mobile-content-transfer) on a React.js application to allow your users to transfer content from their mobile devices to other devices that are running your application. The communication between the mobile and your application is secured using end-to-end encryption. 
 
 ### How to Run
 
@@ -9,6 +9,4 @@ This example application demonstrates how you can use the [Global Input App libr
    npm install
    npm start
 ```
-
-The running instance of this application is [here](https://globalinput.co.uk/global-input-app/content-transfer). 
    
