@@ -1,12 +1,14 @@
 ## Mobile Content Transfer
-This example application demonstrates how you can use the [Global Input App library](https://github.com/global-input/global-input-react) to implement [Content transfer](https://globalinput.co.uk/global-input-app/mobile-content-transfer) on a multi-device environment. Considering its simplicity, this application can serve as a "Hello World" example for introducing the [Global Input App library](https://github.com/global-input/global-input-react) that provides Mobile Integration.
+This example application demonstrates how you can use the [Global Input App library](https://github.com/global-input/global-input-react) to implement [Content transfer](https://globalinput.co.uk/global-input-app/mobile-content-transfer) on a device application so users can transfer content from their mobile devices to the device that is running your application. The communication between the mobile and your application is secured with end-to-end encryption. 
 
 ### How to Run
-Upon downloading the source code (```git clone https://github.com/global-input/content-transfer-example```), run:
+
 ```
+   git clone  https://github.com/global-input/content-transfer-example.git
+   cd content-transfer-example  
    npm install
-   yarn start
+   npm start
 ```
 
-You may also try the [running instance of this application](https://globalinput.co.uk/global-input-app/content-transfer). 
+The running instance of this application is [here](https://globalinput.co.uk/global-input-app/content-transfer). 
    
