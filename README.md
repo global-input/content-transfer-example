@@ -1,5 +1,5 @@
 ## Mobile Content Transfer
-This is the source code of [a demo application](https://globalinput.co.uk/global-input-app/content-transfer), demonstrating how you can use the [Global Input App library](https://github.com/global-input/global-input-react) to achieve [Mobile Content Transfer](https://globalinput.co.uk/global-input-app/mobile-content-transfer) on a React.js application to allow your users to transfer content from their mobile devices to other devices that are running your application. The communication between the mobile and your application is secured using end-to-end encryption. 
+This is the source code of [an example](https://globalinput.co.uk/global-input-app/content-transfer) on using the [global-input-react](https://github.com/global-input/global-input-react) to introduce mobile interoperability into React applications running on smart devices like smart TVs, set-top boxes, game consoles, and devices in IoT, so that users can use their mobiles to operate on them.
 
 ### How to Run
 
