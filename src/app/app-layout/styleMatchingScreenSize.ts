@@ -1,18 +1,18 @@
 let screenMedia = {
-    screenmedias: [],
-    biggerThan: function (width) {
-        var matched = this.screenmedias.filter(s => s.width === width);
+    screenmedias: [] as any[],
+    biggerThan: function (width: number) {
+        var matched = this.screenmedias.filter((s: any) => s.width === width);
         if (matched.length) {
-            return matched[0].media?.matches;
+            return matched[0].media.matches;
         }
         const scm = {
             width,
             media: window.matchMedia(`(min-width: ${width}px)`)
         };
         this.screenmedias.push(scm);
-        return scm.media?.matches;
+        return scm.media.matches;
     },
-    getScreenStyle: function (defaultStyle, specificStyle, target, name, namedState) {
+    getScreenStyle: function (defaultStyle: any, specificStyle: any, target: any, name: string, namedState: string) {
 
         if (!target.computedStyles) {
             target.computedStyles = [];
@@ -54,7 +54,7 @@ let screenMedia = {
     }
 };
 
-const styleMatchingScreenSize = function (namedState) {
+const styleMatchingScreenSize= function (namedState: any) {
 
     if (this.bigScreen) {
 
@@ -100,4 +100,5 @@ const styleMatchingScreenSize = function (namedState) {
     }
 
 }
+
 export default styleMatchingScreenSize;
