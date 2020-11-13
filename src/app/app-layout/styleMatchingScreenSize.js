@@ -3,14 +3,14 @@ let screenMedia = {
     biggerThan: function (width) {
         var matched = this.screenmedias.filter(s => s.width === width);
         if (matched.length) {
-            return matched[0].media.matches;
+            return matched[0].media?.matches;
         }
         const scm = {
             width,
             media: window.matchMedia(`(min-width: ${width}px)`)
         };
         this.screenmedias.push(scm);
-        return scm.media.matches;
+        return scm.media?.matches;
     },
     getScreenStyle: function (defaultStyle, specificStyle, target, name, namedState) {
 
@@ -54,7 +54,7 @@ let screenMedia = {
     }
 };
 
-export default function (namedState) {
+const styleMatchingScreenSize = function (namedState) {
 
     if (this.bigScreen) {
 
@@ -100,3 +100,4 @@ export default function (namedState) {
     }
 
 }
+export default styleMatchingScreenSize;
