@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 //+//import { useHistory } from 'react-router-dom'; ////website
-import { useGlobalInputApp } from 'global-input-react';
+import { useGlobalInputApp,ConnectQR } from 'global-input-react';
 
 import { PageContainer, Title, P, A, TextAreaBox, TextButton } from './app-layout';
-//+//import * as mobileUI from '../../mobile-ui'; ////website
+//+//import * as mobileUI from '../../micro-apps/mobile-ui'; ////website
 
 const App: React.FC = () => {
   const [content, setContent] = useState('');
@@ -16,7 +16,7 @@ const App: React.FC = () => {
         setContent(field.value as string);
         break;
       default:
-      //+//mobileUI.addField.onFieldChange(field, history); ////website
+      //+//mobileUI.onFieldChange(field, history); ////website
 
     }
   });
@@ -32,7 +32,7 @@ const App: React.FC = () => {
   return (
     <PageContainer>
       <Title>Content Transfer Application</Title>
-      <mobile.ConnectQR />
+      <ConnectQR mobile={mobile}/>
       {mobile.isError && (<P>{mobile.errorMessage}</P>)}
       {mobile.isConnectionDenied && (<P>You can only use one mobile app per session. Disconnect to start a new session.</P>)}
       {mobile.isConnected && (
@@ -66,7 +66,7 @@ const FIELDS = {
     value: "You may paste content in the text box above to transfer it into the connected application."
   }
 };
-//+//mobileUI.addField.add(FIELDS);////website
+//+//mobileUI.add(FIELDS);////website
 const initData = {
   id: 'content-transfer-example',
   form: {
