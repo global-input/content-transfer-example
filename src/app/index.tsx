@@ -15,7 +15,7 @@ const App: React.FC = () => {
 
   return (
     <Container>
-      <Title>A Simple Example of How to Introduce Mobile Interoperability</Title>
+      <Title>A Mobile Interoperability Example</Title>
       <SourceCodeLink>source code</SourceCodeLink>
       <ConnectWidget mobile={mobile}/>
       <Form>
@@ -26,7 +26,7 @@ const App: React.FC = () => {
           <Button  onClick={copyToClipboard}>Copy</Button>
 
 
-      <Text>This example application serves as a 'Hello World' example application on how to use the <LibraryLink>global-input-react</LibraryLink> library to introduce mobile input functionality into a client application running on a device or a computer.
+      <Text>This example application serves as a 'Hello World' example of how to use the <LibraryLink>global-input-react</LibraryLink> library to achieve the mobile interoperability.
             </Text>
 
       </Form>

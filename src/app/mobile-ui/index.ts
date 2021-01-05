@@ -11,9 +11,11 @@ import { useGlobalInputApp,ConnectQR} from 'global-input-react';
 //+//import * as mobileUI from '../../../micro-apps/mobile-ui'; ////website
 
 
-export const ConnectWidget=ConnectQR;
+//+///*
+const ConnectWidget=ConnectQR;
+//+//*/
 
-
+export {ConnectWidget};
 
 const FIELDS = {
     contentField: {
@@ -39,7 +41,7 @@ const initData = {
     }
  };
 
-export const useConnectMobile = (setContent) => {
+export const useConnectMobile = ({setContent}) => {
   //+//const history = useHistory();////website
 //+///*
   const mobile = useGlobalInputApp({ initData });
