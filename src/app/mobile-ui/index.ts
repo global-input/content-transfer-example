@@ -1,19 +1,19 @@
 
-//+//import { useHistory } from 'react-router-dom'; ////website
+// import { useNavigate } from 'react-router-dom'; ////website
 
-//+///*
+
 import { useGlobalInputApp,ConnectQR} from 'global-input-react';
-//+//*/
-
-//+//import { useMobile,ConnectWidget } from '../../../mobile';
 
 
-//+//import * as mobileUI from '../../../micro-apps/mobile-ui'; ////website
+// import { useMobile,ConnectWidget } from '../../../mobile';
 
 
-//+///*
+// import * as mobileUI from '../../../micro-apps/mobile-ui'; ////website
+
+
+
 const ConnectWidget=ConnectQR;
-//+//*/
+
 
 export {ConnectWidget};
 
@@ -31,7 +31,7 @@ const FIELDS = {
     }
 };
 
-//+//mobileUI.add(FIELDS);////website
+// mobileUI.add(FIELDS);////website
 
 const initData = {
     id: 'content-transfer-example',
@@ -42,18 +42,18 @@ const initData = {
  };
 
 export const useConnectMobile = ({setContent}) => {
-  //+//const history = useHistory();////website
-//+///*
+  // const history = useNavigate();////website
+
   const mobile = useGlobalInputApp({ initData });
-//+//*/
-//+// const mobile = useMobile(initData, true);
+
+//  const mobile = useMobile(initData, true);
   mobile.setOnchange(({ field }) => {
     switch (field.id) {
       case FIELDS.contentField.id:
         setContent(field.value as string);
         break;
       default:
-      //+//mobileUI.onFieldChange(field, history); ////website
+      // mobileUI.onFieldChange(field, history); ////website
 
     }
   });
